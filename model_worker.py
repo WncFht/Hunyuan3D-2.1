@@ -91,7 +91,7 @@ class ModelWorker:
         
         # Initialize shape generation pipeline (matching demo.py)
         self.pipeline = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained(model_path)
-        
+        self.pipeline.enable_flashvdm(mc_algo='mc')
         # Initialize texture generation pipeline (matching demo.py)
         max_num_view = 6  # can be 6 to 9
         resolution = 512  # can be 768 or 512

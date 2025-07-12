@@ -22,14 +22,13 @@ import numpy as np
 import torch
 import trimesh
 import yaml
-from PIL import Image
+from diffusers.utils.import_utils import is_accelerate_available, is_accelerate_version
 from diffusers.utils.torch_utils import randn_tensor
-from diffusers.utils.import_utils import is_accelerate_version, is_accelerate_available
+from PIL import Image
 from tqdm import tqdm
 
-from .models.autoencoders import ShapeVAE
-from .models.autoencoders import SurfaceExtractors
-from .utils import logger, synchronize_timer, smart_load_model
+from .models.autoencoders import ShapeVAE, SurfaceExtractors
+from .utils import logger, smart_load_model, synchronize_timer
 
 
 def retrieve_timesteps(
@@ -264,6 +263,7 @@ class Hunyuan3DDiTPipeline:
                 'Hunyuan3D-2': ('tencent/Hunyuan3D-2', 'hunyuan3d-vae-v2-0-turbo'),
                 'Hunyuan3D-2mv': ('tencent/Hunyuan3D-2', 'hunyuan3d-vae-v2-0-turbo'),
                 'Hunyuan3D-2mini': ('tencent/Hunyuan3D-2mini', 'hunyuan3d-vae-v2-mini-turbo'),
+                'Hunyuan3D-2.1': ('tencent/Hunyuan3D-2.1', 'hunyuan3d-vae-v2-1-turbo'),
             }
             model_name = model_path.split('/')[-1]
             if replace_vae and model_name in turbo_vae_mapping:
@@ -285,6 +285,7 @@ class Hunyuan3DDiTPipeline:
                 'Hunyuan3D-2': ('tencent/Hunyuan3D-2', 'hunyuan3d-vae-v2-0'),
                 'Hunyuan3D-2mv': ('tencent/Hunyuan3D-2', 'hunyuan3d-vae-v2-0'),
                 'Hunyuan3D-2mini': ('tencent/Hunyuan3D-2mini', 'hunyuan3d-vae-v2-mini'),
+                'Hunyuan3D-2.1': ('tencent/Hunyuan3D-2.1', 'hunyuan3d-vae-v2-1'),
             }
             model_name = model_path.split('/')[-1]
             if model_name in vae_mapping:
